@@ -1,6 +1,6 @@
 //
-//  Lunar_CalendarApp.swift
-//  Lunar Calendar
+//  LunarCalendarApp.swift
+//  LunarCalendar
 //
 //  Created by Huy Ta on 9/26/20.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Lunar_CalendarApp: App {
+struct LunarCalendarApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

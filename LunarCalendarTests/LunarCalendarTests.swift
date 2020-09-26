@@ -1,14 +1,14 @@
 //
-//  Lunar_CalendarTests.swift
-//  Lunar CalendarTests
+//  LunarCalendarTests.swift
+//  LunarCalendarTests
 //
 //  Created by Huy Ta on 9/26/20.
 //
 
 import XCTest
-@testable import Lunar_Calendar
+@testable import LunarCalendar
 
-class Lunar_CalendarTests: XCTestCase {
+class LunarCalendarTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

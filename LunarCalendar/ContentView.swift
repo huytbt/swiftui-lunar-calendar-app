@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Lunar Calendar
+//  LunarCalendar
 //
 //  Created by Huy Ta on 9/26/20.
 //
