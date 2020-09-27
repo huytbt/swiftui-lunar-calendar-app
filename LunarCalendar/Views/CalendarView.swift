@@ -16,48 +16,11 @@ struct CalendarView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                VStack {
-                    Text("September")
-                        .font(.title)
-                        .padding(.bottom)
-                        
-                        
-                    HStack {
-                        Text("MON").font(.caption).frame(maxWidth: .infinity)
-                        Text("TUE").font(.caption).frame(maxWidth: .infinity)
-                        Text("WED").font(.caption).frame(maxWidth: .infinity)
-                        Text("THU").font(.caption).frame(maxWidth: .infinity)
-                        Text("FRI").font(.caption).frame(maxWidth: .infinity)
-                        Text("SAT").font(.caption).frame(maxWidth: .infinity)
-                        Text("SUN").font(.caption).frame(maxWidth: .infinity)
-                    }
-                    .padding(.bottom)
-                    
-                    HStack {
-                        DayView(date: dateFromString(date: "2020-09-28"))
-                        DayView(date: dateFromString(date: "2020-09-29"))
-                        DayView(date: dateFromString(date: "2020-09-30"))
-                        DayView(date: dateFromString(date: "2020-10-01"))
-                        DayView(date: dateFromString(date: "2020-10-02"))
-                        DayView(date: dateFromString(date: "2020-10-03"))
-                        DayView(date: dateFromString(date: "2020-10-04"))
-                    }
-                    .padding(.bottom)
-                    
-                    HStack {
-                        DayView(date: dateFromString(date: "2020-10-05"))
-                        DayView(date: dateFromString(date: "2020-10-06"))
-                        DayView(date: dateFromString(date: "2020-10-07"))
-                        DayView(date: dateFromString(date: "2020-10-08"))
-                        DayView(date: dateFromString(date: "2020-10-09"))
-                        DayView(date: dateFromString(date: "2020-10-10"))
-                        DayView(date: dateFromString(date: "2020-10-11"))
-                    }
-                    .padding(.bottom)
-                }
+            VStack {
+                MonthView(date: Date())
+                Spacer()
             }
-            .navigationBarTitle(Text("Lunar Calendar"))
+            .navigationBarTitle(Text("September"))
             .navigationBarItems(leading: Text("Cancel"), trailing: Text("Add"))
         }
     }

@@ -18,6 +18,7 @@ struct DateView: View {
     var body: some View {
         VStack {
             Text(String(date.day))
+                .frame(maxWidth: .infinity)
             Text(String(lunarDate(date: date).day))
                 .font(.caption)
         }.frame(maxWidth: .infinity)
