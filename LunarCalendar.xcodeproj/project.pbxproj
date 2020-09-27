@@ -17,6 +17,7 @@
 		6CBE7981251F36E4004E408E /* LunarCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE7980251F36E4004E408E /* LunarCalendarUITests.swift */; };
 		6CBE79A9251F3E2C004E408E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE79A8251F3E2C004E408E /* CalendarView.swift */; };
 		6CBE947325209D4900DC4760 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE947225209D4900DC4760 /* WeekView.swift */; };
+		6CBEAEAA2520F864005F9AA7 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBEAEA92520F864005F9AA7 /* MonthView.swift */; };
 		6CD5C904251FC00E0005DF41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD5C903251FC00E0005DF41 /* LaunchScreen.storyboard */; };
 		FA98A677374591CD8A2A5340 /* Pods_LunarCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE288B35D877E2C5EF62B00 /* Pods_LunarCalendar.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		6CBE7982251F36E4004E408E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CBE79A8251F3E2C004E408E /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		6CBE947225209D4900DC4760 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		6CBEAEA92520F864005F9AA7 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
 		6CD5C903251FC00E0005DF41 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7ADB552E507029AF3FC80D65 /* Pods-LunarCalendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LunarCalendar.debug.xcconfig"; path = "Target Support Files/Pods-LunarCalendar/Pods-LunarCalendar.debug.xcconfig"; sourceTree = "<group>"; };
 		7DD85EA55A16485697BE2305 /* Pods-LunarCalendar-LunarCalendarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LunarCalendar-LunarCalendarUITests.release.xcconfig"; path = "Target Support Files/Pods-LunarCalendar-LunarCalendarUITests/Pods-LunarCalendar-LunarCalendarUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				6C80ED98252041A0004E1AF5 /* DateView.swift */,
 				6CBE947225209D4900DC4760 /* WeekView.swift */,
+				6CBEAEA92520F864005F9AA7 /* MonthView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CBE947325209D4900DC4760 /* WeekView.swift in Sources */,
+				6CBEAEAA2520F864005F9AA7 /* MonthView.swift in Sources */,
 				6CBE7964251F36E3004E408E /* LunarCalendarApp.swift in Sources */,
 				6C80ED99252041A0004E1AF5 /* DateView.swift in Sources */,
 				6CBE79A9251F3E2C004E408E /* CalendarView.swift in Sources */,

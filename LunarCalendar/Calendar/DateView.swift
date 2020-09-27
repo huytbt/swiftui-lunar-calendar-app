@@ -11,8 +11,8 @@ import SwiftDate
 struct DateView: View {
     let date: Date
     fileprivate func lunarDate(date: Date) -> DateInRegion {
-        let lunar = Region(calendar: Calendars.chinese, zone: Zones.asiaJakarta)
-        return date.convertTo(region: lunar)
+        let region = Region(calendar: Calendars.chinese, zone: Zones.asiaJakarta)
+        return date.convertTo(region: region)
     }
     
     var body: some View {
