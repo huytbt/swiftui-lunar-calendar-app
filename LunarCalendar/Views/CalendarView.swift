@@ -8,21 +8,41 @@
 import SwiftUI
 
 struct CalendarView: View {
-    fileprivate func dateFromString(date: String) -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.date(from: date)!
-    }
-    
     var body: some View {
-        NavigationView {
-            VStack {
-                MonthView(date: Date())
-                Spacer()
+        ScrollView(showsIndicators: false) {
+            ScrollViewReader { scrollView in
+                LazyVStack(spacing: 10) {
+                    ForEach(1...1000, id: \.self) { i in
+                        MonthView(date: Date().dateByAdding(i, .month).date)
+                    }
+                }
+                .onAppear {
+                    scrollView.scrollTo(500)
+                }
             }
-            .navigationBarTitle(Text("September"))
-            .navigationBarItems(leading: Text("Cancel"), trailing: Text("Add"))
         }
+//        List(0..<1000) { i in
+//            MonthView(date: Date().dateByAdding(i, .month).date)
+//        }
+//        ScrollView {
+//            ScrollViewReader { value in
+//                Button("Jump to #8") {
+//                    value.scrollTo(5)
+//                }
+//
+//                ForEach(0..<10) { i in
+//                    MonthView(date: Date().dateByAdding(i, .month).date)
+//                }
+//            }
+//        }
+//        NavigationView {
+//            VStack {
+//                MonthView(date: Date())
+//                Spacer()
+//            }
+//            .navigationBarTitle(Text("September"))
+//            .navigationBarItems(leading: Text("Cancel"), trailing: Text("Add"))
+//        }
     }
 }
 
@@ -32,14 +52,7 @@ struct CalendarView_Previews: PreviewProvider {
             CalendarView()
                 .preferredColorScheme(.dark)
             
-            CalendarView()
+            // CalendarView()
         }
-    }
-}
-
-struct DayView: View {
-    let date: Date
-    var body: some View {
-        Text(String(date.day)).frame(maxWidth: .infinity)
     }
 }

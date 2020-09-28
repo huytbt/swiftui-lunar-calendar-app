@@ -132,7 +132,6 @@
 			children = (
 				6C80ED972520414D004E1AF5 /* Calendar */,
 				6CBE7997251F3AC1004E408E /* Application */,
-				6CBE7996251F3A9C004E408E /* Controllers */,
 				6CBE7995251F3A88004E408E /* Resources */,
 				6CBE799B251F3B03004E408E /* Views */,
 			);
@@ -171,13 +170,6 @@
 				6CBE7967251F36E4004E408E /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		6CBE7996251F3A9C004E408E /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		6CBE7997251F3AC1004E408E /* Application */ = {
@@ -551,7 +543,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -606,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -627,7 +619,7 @@
 				DEVELOPMENT_TEAM = 87NM8BAHXD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = LunarCalendar/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -650,7 +642,7 @@
 				DEVELOPMENT_TEAM = 87NM8BAHXD;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = LunarCalendar/Application/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
