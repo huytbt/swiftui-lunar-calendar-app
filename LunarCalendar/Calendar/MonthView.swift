@@ -18,9 +18,10 @@ struct MonthView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(date.toFormat("MMM yyyy"))
-                .font(.title)
+                .font(.title3)
+                .padding()
             ForEach(0 ..< 5) { index in
                 WeekView(date: date.dateByAdding(index * 7, .day).date)
                     .padding(.vertical)

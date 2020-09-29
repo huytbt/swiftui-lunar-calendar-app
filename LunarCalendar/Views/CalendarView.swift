@@ -9,13 +9,24 @@ import SwiftUI
 import SwiftDate
 
 struct CalendarView: View {
+    @State private var isShowingEvent = false
     private let midIndex = Date().year * 12 + Date().month
     var body: some View {
         VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("September")
+                    Text("2020").font(.caption)
+                }
+                Spacer()
+                Button(action: {}) {
+                    Image(systemName: "plus")
+                }
+            }.padding()
             WeekdayLabel()
             ScrollView(showsIndicators: false) {
                 ScrollViewReader { scrollView in
-                    LazyVStack(spacing: 10) {
+                    LazyVStack() {
                         ForEach(0...(midIndex * 2), id: \.self) { index in
                             MonthView(
                                 date: Date()
@@ -31,14 +42,31 @@ struct CalendarView: View {
                     }
                 }
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Button("Today") {}
-                    Spacer()
-                    Button("Events") {}
-                    Spacer()
-                    Button("Settings") {}
+            if isShowingEvent {
+                VStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
+                        Text("Today").font(.headline)
+                        Text("3 Events").font(.caption)
+                    }.padding()
+                    List {
+                        Text("Mon's birthday")
+                        Text("Review design")
+                        Text("Deployment")
+                    }
+                }.frame(height: 300)
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button("Today") {
+                    withAnimation {
+                        self.isShowingEvent.toggle()
+                    }
                 }
+                Spacer()
+                Button("Events") {}
+                Spacer()
+                Button("Settings") {}
             }
         }
     }
