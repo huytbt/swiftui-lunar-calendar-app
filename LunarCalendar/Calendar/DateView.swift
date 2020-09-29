@@ -28,5 +28,6 @@ struct DateView: View {
 struct DateView_Previews: PreviewProvider {
     static var previews: some View {
         DateView(date: Date())
+        DateView(date: "2045-01-01".toDate()!.date)
     }
 }

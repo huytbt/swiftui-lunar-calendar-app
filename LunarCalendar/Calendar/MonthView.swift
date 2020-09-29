@@ -14,11 +14,13 @@ struct MonthView: View {
     init(date: Date) {
         let region = Region(calendar: Calendars.chinese, zone: Zones.asiaJakarta)
         let lunarDate = date.convertTo(region: region)
-        self.date = lunarDate.dateAt(.startOfMonth).date.dateAt(.startOfWeek)
+        self.date = lunarDate.dateAtStartOf(.month).date.dateAtStartOf(.weekday)
     }
 
     var body: some View {
         VStack {
+            Text(date.toFormat("MMM yyyy"))
+                .font(.title)
             ForEach(0 ..< 5) { index in
                 WeekView(date: date.dateByAdding(index * 7, .day).date)
                     .padding(.vertical)
@@ -29,6 +31,6 @@ struct MonthView: View {
 
 struct MonthView_Previews: PreviewProvider {
     static var previews: some View {
-        MonthView(date: Date())
+        MonthView(date: "2045-01-01".toDate()!.date)
     }
 }
