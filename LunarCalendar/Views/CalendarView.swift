@@ -16,16 +16,28 @@ struct CalendarView: View {
             ScrollView(showsIndicators: false) {
                 ScrollViewReader { scrollView in
                     LazyVStack(spacing: 10) {
-                        ForEach(0...(midIndex * 2), id: \.self) { i in
-                            MonthView(date: Date().dateByAdding(i - midIndex, .month).date)
-                                .navigationTitle(Date().dateByAdding(i, .month).date.toFormat("MMMM yyyy"))
+                        ForEach(0...(midIndex * 2), id: \.self) { index in
+                            MonthView(
+                                date: Date()
+                                    .dateByAdding(
+                                        Int(floor(29.530588853 * Double((index - midIndex)))
+                                    ), .day).date
+                            )
                         }
-                    }
-                    .onAppear {
+                    }.onAppear {
                         withAnimation {
                             scrollView.scrollTo(midIndex)
                         }
                     }
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button("Today") {}
+                    Spacer()
+                    Button("Events") {}
+                    Spacer()
+                    Button("Settings") {}
                 }
             }
         }
@@ -37,8 +49,6 @@ struct CalendarView_Previews: PreviewProvider {
         Group {
             CalendarView()
                 .preferredColorScheme(.dark)
-
-            CalendarView()
         }
     }
 }
