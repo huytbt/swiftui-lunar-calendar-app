@@ -6,43 +6,29 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct CalendarView: View {
+    private let midIndex = Date().year * 12 + Date().month
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            ScrollViewReader { scrollView in
-                LazyVStack(spacing: 10) {
-                    ForEach(1...1000, id: \.self) { i in
-                        MonthView(date: Date().dateByAdding(i, .month).date)
+        VStack {
+            WeekdayLabel()
+            ScrollView(showsIndicators: false) {
+                ScrollViewReader { scrollView in
+                    LazyVStack(spacing: 10) {
+                        ForEach(0...(midIndex * 2), id: \.self) { i in
+                            MonthView(date: Date().dateByAdding(i - midIndex, .month).date)
+                                .navigationTitle(Date().dateByAdding(i, .month).date.toFormat("MMMM yyyy"))
+                        }
                     }
-                }
-                .onAppear {
-                    scrollView.scrollTo(500)
+                    .onAppear {
+                        withAnimation {
+                            scrollView.scrollTo(midIndex)
+                        }
+                    }
                 }
             }
         }
-//        List(0..<1000) { i in
-//            MonthView(date: Date().dateByAdding(i, .month).date)
-//        }
-//        ScrollView {
-//            ScrollViewReader { value in
-//                Button("Jump to #8") {
-//                    value.scrollTo(5)
-//                }
-//
-//                ForEach(0..<10) { i in
-//                    MonthView(date: Date().dateByAdding(i, .month).date)
-//                }
-//            }
-//        }
-//        NavigationView {
-//            VStack {
-//                MonthView(date: Date())
-//                Spacer()
-//            }
-//            .navigationBarTitle(Text("September"))
-//            .navigationBarItems(leading: Text("Cancel"), trailing: Text("Add"))
-//        }
     }
 }
 
@@ -51,8 +37,20 @@ struct CalendarView_Previews: PreviewProvider {
         Group {
             CalendarView()
                 .preferredColorScheme(.dark)
-            
-            // CalendarView()
+
+            CalendarView()
+        }
+    }
+}
+
+struct WeekdayLabel: View {
+    var body: some View {
+        HStack{
+            ForEach(0 ..< 7) { index in
+                Text(Date().dateAt(.startOfWeek).dateByAdding(index, .day).weekdayName(.short))
+                    .font(.caption)
+                    .frame(maxWidth: .infinity)
+            }
         }
     }
 }
