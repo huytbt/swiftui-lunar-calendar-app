@@ -38,6 +38,11 @@ struct CalendarView: View {
                                 selectedDate: selectedDate,
                                 onTap: { date in
                                     withAnimation {
+                                        if self.selectedDate == date {
+                                            self.isShowingEvent.toggle()
+                                        } else {
+                                            self.isShowingEvent = true
+                                        }
                                         self.selectedDate = date
                                     }
                                 }
@@ -66,11 +71,7 @@ struct CalendarView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
-                Button("Today") {
-                    withAnimation {
-                        self.isShowingEvent.toggle()
-                    }
-                }
+                Button("Today") {}
                 Spacer()
                 Button("Events") {}
                 Spacer()
