@@ -31,8 +31,9 @@ struct CalendarView: View {
                             MonthView(
                                 date: Date()
                                     .dateByAdding(
-                                        Int(floor(29.530588853 * Double((index - midIndex)))
-                                    ), .day).date
+                                        Int(floor(29.530588853 * Double(index - midIndex))),
+                                        .day
+                                    ).date
                             )
                         }
                     }.onAppear {
