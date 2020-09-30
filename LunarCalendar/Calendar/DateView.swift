@@ -11,17 +11,19 @@ import SwiftDate
 struct DateView: View {
     let date: Date
     var selected: Bool? = false
+    var onTap: ((Date) -> Void)? = nil
+
     var body: some View {
         if selected ?? false {
             if date.isToday {
-                DateText(date: date, color: Color.white)
+                DateText(date: date, color: Color.white, onTap: onTap)
                     .background(
                         Circle()
                             .foregroundColor(Color(UIColor.systemRed))
                             .frame(minWidth: 50, minHeight: 50)
                     )
             } else {
-                DateText(date: date, color: Color(UIColor.systemBackground))
+                DateText(date: date, color: Color(UIColor.systemBackground), onTap: onTap)
                     .background(
                         Circle()
                             .foregroundColor(Color(UIColor.label))
@@ -30,9 +32,9 @@ struct DateView: View {
             }
         } else {
             if date.isToday {
-                DateText(date: date, color: Color(UIColor.systemRed))
+                DateText(date: date, color: Color(UIColor.systemRed), onTap: onTap)
             } else {
-                DateText(date: date)
+                DateText(date: date, onTap: onTap)
             }
         }
     }
@@ -40,14 +42,17 @@ struct DateView: View {
     struct DateText: View {
         let date: Date
         var color: Color? = nil
+        var onTap: ((Date) -> Void)? = nil
+
         fileprivate func lunarDate(date: Date) -> DateInRegion {
             let region = Region(calendar: Calendars.chinese)
             return date.convertTo(region: region)
         }
+
         var body: some View {
             VStack {
                 if color != nil {
-                    Text(String(date.day))
+                    Text(String(date.day) + (date.day == 1 ? "/\(date.month)" : ""))
                         .foregroundColor(color)
                         .frame(maxWidth: .infinity)
                     Text(String(lunarDate(date: date).day))
@@ -61,6 +66,13 @@ struct DateView: View {
                 }
             }
             .frame(maxWidth: .infinity)
+            .gesture(
+                TapGesture().onEnded {
+                    if onTap != nil {
+                        onTap!(date)
+                    }
+                }
+            )
         }
     }
 }

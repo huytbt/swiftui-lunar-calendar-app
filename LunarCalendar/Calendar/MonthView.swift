@@ -10,11 +10,15 @@ import SwiftDate
 
 struct MonthView: View {
     let date: Date
+    var selectedDate: Date? = nil
+    var onTap: ((Date) -> Void)? = nil
     private var weeks: Int = 5
     private var hideBeforeItems: [Int] = []
     private var hideAfterItems: [Int] = []
     
-    init(date: Date) {
+    init(date: Date, selectedDate: Date? = nil, onTap: ((Date) -> Void)? = nil) {
+        self.selectedDate = selectedDate
+        self.onTap = onTap
         let region = Region(calendar: Calendars.chinese)
         let lunarDate = date.convertTo(region: region)
         let startDayOfMonth = lunarDate.dateAtStartOf(.month).date
@@ -47,15 +51,22 @@ struct MonthView: View {
                 if index == 0 {
                     WeekView(
                         date: date.dateByAdding(index * 7, .day).date,
-                        hideItems: hideBeforeItems
+                        selectedDate: selectedDate,
+                        hideItems: hideBeforeItems,
+                        onTap: onTap
                     ).padding(.vertical)
-                } else if index < weeks {
-                    WeekView(date: date.dateByAdding(index * 7, .day).date)
-                        .padding(.vertical)
+                } else if index < weeks - 1 {
+                    WeekView(
+                        date: date.dateByAdding(index * 7, .day).date,
+                        selectedDate: selectedDate,
+                        onTap: onTap
+                    ).padding(.vertical)
                 } else {
                     WeekView(
                         date: date.dateByAdding(index * 7, .day).date,
-                        hideItems: hideAfterItems
+                        selectedDate: selectedDate,
+                        hideItems: hideAfterItems,
+                        onTap: onTap
                     ).padding(.vertical)
                 }
             }

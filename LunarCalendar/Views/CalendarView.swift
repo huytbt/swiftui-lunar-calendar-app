@@ -10,6 +10,7 @@ import SwiftDate
 
 struct CalendarView: View {
     @State private var isShowingEvent = false
+    @State private var selectedDate: Date = Date()
     private let midIndex = Date().year * 12 + Date().month
     var body: some View {
         VStack {
@@ -33,7 +34,13 @@ struct CalendarView: View {
                                     .dateByAdding(
                                         Int(floor(29.530588853 * Double(index - midIndex))),
                                         .day
-                                    ).date
+                                    ).date,
+                                selectedDate: selectedDate,
+                                onTap: { date in
+                                    withAnimation {
+                                        self.selectedDate = date
+                                    }
+                                }
                             )
                         }
                     }.onAppear {
