@@ -12,7 +12,7 @@ struct MonthView: View {
     let date: Date
     
     init(date: Date) {
-        let region = Region(calendar: Calendars.chinese, zone: Zones.asiaJakarta)
+        let region = Region(calendar: Calendars.chinese)
         let lunarDate = date.convertTo(region: region)
         self.date = lunarDate.dateAtStartOf(.month).date.dateAtStartOf(.weekday)
     }
@@ -32,6 +32,7 @@ struct MonthView: View {
 
 struct MonthView_Previews: PreviewProvider {
     static var previews: some View {
+        MonthView(date: Date())
         MonthView(date: "2045-01-01".toDate()!.date)
     }
 }
