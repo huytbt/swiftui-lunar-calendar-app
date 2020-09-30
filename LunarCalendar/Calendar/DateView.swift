@@ -17,7 +17,7 @@ struct DateView: View {
                 DateText(date: date, color: Color.white)
                     .background(
                         Circle()
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Color(UIColor.systemRed))
                             .frame(minWidth: 50, minHeight: 50)
                     )
             } else {
@@ -30,7 +30,7 @@ struct DateView: View {
             }
         } else {
             if date.isToday {
-                DateText(date: date, color: Color.red)
+                DateText(date: date, color: Color(UIColor.systemRed))
             } else {
                 DateText(date: date)
             }
