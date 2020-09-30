@@ -30,7 +30,6 @@ struct MonthView: View {
         if duration.weekOfYear! != 4 && duration.day! > 0 {
             weeks = 6
         }
-        print(duration)
         let endDayOfWeekOfMonth = endDayOfMonth.dateAtEndOf(.weekOfMonth)
         if (endDayOfWeekOfMonth - endDayOfMonth).day! > 0 {
             for index in 0...((endDayOfWeekOfMonth - endDayOfMonth).day!) {
