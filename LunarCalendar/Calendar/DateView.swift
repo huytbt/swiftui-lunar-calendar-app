@@ -11,30 +11,42 @@ import SwiftDate
 struct DateView: View {
     let date: Date
     var selected: Bool? = false
+    var hasEvents: Bool? = false
     var onTap: ((Date) -> Void)? = nil
 
     var body: some View {
-        if selected ?? false {
-            if date.isToday {
-                DateText(date: date, color: Color.white, onTap: onTap)
-                    .background(
-                        Circle()
-                            .foregroundColor(Color(UIColor.systemRed))
-                            .frame(minWidth: 50, minHeight: 50)
-                    )
+        VStack {
+            if selected! {
+                if date.isToday {
+                    DateText(date: date, color: Color.white, onTap: onTap)
+                        .background(
+                            Circle()
+                                .foregroundColor(Color(UIColor.systemRed))
+                                .frame(minWidth: 50, minHeight: 50)
+                        )
+                } else {
+                    DateText(date: date, color: Color(UIColor.systemBackground), onTap: onTap)
+                        .background(
+                            Circle()
+                                .foregroundColor(Color(UIColor.label))
+                                .frame(minWidth: 50, minHeight: 50)
+                        )
+                }
             } else {
-                DateText(date: date, color: Color(UIColor.systemBackground), onTap: onTap)
-                    .background(
-                        Circle()
-                            .foregroundColor(Color(UIColor.label))
-                            .frame(minWidth: 50, minHeight: 50)
-                    )
+                if date.isToday {
+                    DateText(date: date, color: Color(UIColor.systemRed), onTap: onTap)
+                } else {
+                    DateText(date: date, onTap: onTap)
+                }
             }
-        } else {
-            if date.isToday {
-                DateText(date: date, color: Color(UIColor.systemRed), onTap: onTap)
+            if hasEvents! {
+                Circle()
+                    .foregroundColor(Color(UIColor.systemGray2))
+                    .frame(width: 8, height: 8)
             } else {
-                DateText(date: date, onTap: onTap)
+                Circle()
+                    .frame(width: 8, height: 8)
+                    .opacity(0.0)
             }
         }
     }
@@ -82,13 +94,13 @@ struct DateView_Previews: PreviewProvider {
         VStack {
             DateView(date: Date()).padding()
             DateView(date: Date(), selected: true).padding()
-            DateView(date: "2045-01-01".toDate()!.date).padding()
+            DateView(date: "2045-01-01".toDate()!.date, hasEvents: true).padding()
             DateView(date: "2020-01-01".toDate()!.date, selected: true).padding()
         }
         VStack {
             DateView(date: Date()).padding()
             DateView(date: Date(), selected: true).padding()
-            DateView(date: "2045-01-01".toDate()!.date).padding()
+            DateView(date: "2045-01-01".toDate()!.date, hasEvents: true).padding()
             DateView(date: "2020-01-01".toDate()!.date, selected: true).padding()
         }.preferredColorScheme(.dark)
     }
