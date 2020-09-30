@@ -78,13 +78,11 @@ struct DateView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .gesture(
-                TapGesture().onEnded {
-                    if onTap != nil {
-                        onTap!(date)
-                    }
+            .onTapGesture {
+                if onTap != nil {
+                    onTap!(date)
                 }
-            )
+            }
         }
     }
 }

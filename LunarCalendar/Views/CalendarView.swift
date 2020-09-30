@@ -11,7 +11,9 @@ import SwiftDate
 struct CalendarView: View {
     @State private var isShowingEvent = false
     @State private var selectedDate: Date = Date()
+    @State private var settingModal = false
     private let midIndex = Date().year * 12 + Date().month
+    
     var body: some View {
         VStack {
             HStack {
@@ -75,7 +77,11 @@ struct CalendarView: View {
                 Spacer()
                 Button("Events") {}
                 Spacer()
-                Button("Settings") {}
+                Button("Settings") {
+                    self.settingModal.toggle()
+                }.sheet(isPresented: $settingModal) {
+                    SettingView(showModal: self.$settingModal)
+                }
             }
         }
     }
