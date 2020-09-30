@@ -10,11 +10,14 @@ import SwiftUI
 struct SettingView: View {
     @Binding var showModal: Bool
     var body: some View {
-        VStack {
-            Text("This is a modal view")
-        }
-        .onTapGesture {
-            self.showModal.toggle()
+        NavigationView {
+            VStack {
+                Text("This is a modal view")
+            }
+            .navigationTitle("Setting")
+            .onTapGesture {
+                self.showModal.toggle()
+            }
         }
     }
 }
