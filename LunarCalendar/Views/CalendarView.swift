@@ -12,6 +12,7 @@ struct CalendarView: View {
     @State private var isShowingEvent = false
     @State private var selectedDate: Date = Date()
     @State private var settingModal = false
+    @State private var scrollView: ScrollViewProxy? = nil
     private let midIndex = Date().year * 12 + Date().month
     
     var body: some View {
@@ -52,6 +53,9 @@ struct CalendarView: View {
                                 )
                             }
                         }.onAppear {
+                            if self.scrollView == nil {
+                                self.scrollView = scrollView
+                            }
                             withAnimation {
                                 scrollView.scrollTo(midIndex)
                             }
@@ -74,7 +78,13 @@ struct CalendarView: View {
             }
         }.toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
-                Button("Today") {}
+                Button("Today") {
+                    if self.scrollView != nil {
+                        withAnimation {
+                            self.scrollView?.scrollTo(midIndex)
+                        }
+                    }
+                }
                 Spacer()
                 Button("Events") {}
                 Spacer()
