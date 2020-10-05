@@ -57,7 +57,7 @@ struct CalendarView: View {
                                 self.scrollView = scrollView
                             }
                             withAnimation {
-                                scrollView.scrollTo(midIndex)
+                                scrollView.scrollTo(midIndex, anchor: .top)
                             }
                         }
                     }
@@ -81,7 +81,7 @@ struct CalendarView: View {
                 Button("Today") {
                     if self.scrollView != nil {
                         withAnimation {
-                            self.scrollView?.scrollTo(midIndex)
+                            self.scrollView?.scrollTo(midIndex, anchor: .top)
                         }
                     }
                 }
