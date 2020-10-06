@@ -9,15 +9,21 @@ import SwiftUI
 import SwiftDate
 
 struct DateView: View {
-    let date: Date
+    let date: DateInRegion
     var selected: Bool? = false
     var hasEvents: Bool? = false
-    var onTap: ((Date) -> Void)? = nil
+    var onTap: ((DateInRegion) -> Void)? = nil
+    
+    fileprivate func isToday(date: DateInRegion) -> Bool {
+        let region = Region(calendar: Calendars.gregorian, zone: Zones.current)
+        let today = Date().convertTo(region: region)
+        return today.day == date.day && today.month == date.month && today.year == date.year
+    }
 
     var body: some View {
         VStack {
             if selected! {
-                if date.isToday {
+                if isToday(date: date) {
                     DateText(date: date, color: Color.white, onTap: onTap)
                         .background(
                             Circle()
@@ -33,7 +39,7 @@ struct DateView: View {
                         )
                 }
             } else {
-                if date.isToday {
+                if isToday(date: date) {
                     DateText(date: date, color: Color(UIColor.systemRed), onTap: onTap)
                 } else {
                     DateText(date: date, onTap: onTap)
@@ -52,12 +58,12 @@ struct DateView: View {
     }
     
     struct DateText: View {
-        let date: Date
+        let date: DateInRegion
         var color: Color? = nil
-        var onTap: ((Date) -> Void)? = nil
+        var onTap: ((DateInRegion) -> Void)? = nil
 
-        fileprivate func lunarDate(date: Date) -> DateInRegion {
-            let region = Region(calendar: Calendars.chinese)
+        fileprivate func lunarDate(date: DateInRegion) -> DateInRegion {
+            let region = Region(calendar: Calendars.chinese, zone: Zones.current)
             return date.convertTo(region: region)
         }
 
@@ -90,16 +96,16 @@ struct DateView: View {
 struct DateView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            DateView(date: Date()).padding()
-            DateView(date: Date(), selected: true).padding()
-            DateView(date: "2045-01-01".toDate()!.date, hasEvents: true).padding()
-            DateView(date: "2020-01-01".toDate()!.date, selected: true).padding()
+            DateView(date: Date().convertTo(region: .current)).padding()
+            DateView(date: Date().convertTo(region: .current), selected: true).padding()
+            DateView(date: "2045-01-01".toDate()!, hasEvents: true).padding()
+            DateView(date: "2020-01-01".toDate()!, selected: true).padding()
         }
         VStack {
-            DateView(date: Date()).padding()
-            DateView(date: Date(), selected: true).padding()
-            DateView(date: "2045-01-01".toDate()!.date, hasEvents: true).padding()
-            DateView(date: "2020-01-01".toDate()!.date, selected: true).padding()
+            DateView(date: Date().convertTo(region: .current)).padding()
+            DateView(date: Date().convertTo(region: .current), selected: true).padding()
+            DateView(date: "2045-01-01".toDate()!, hasEvents: true).padding()
+            DateView(date: "2020-01-01".toDate()!, selected: true).padding()
         }.preferredColorScheme(.dark)
     }
 }

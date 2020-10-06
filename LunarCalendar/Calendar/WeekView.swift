@@ -9,12 +9,12 @@ import SwiftUI
 import SwiftDate
 
 struct WeekView: View {
-    let date: Date
-    var selectedDate: Date? = nil
+    let date: DateInRegion
+    var selectedDate: DateInRegion? = nil
     var hideItems: [Int]? = []
-    var onTap: ((Date) -> Void)? = nil
+    var onTap: ((DateInRegion) -> Void)? = nil
     
-    init(date: Date, selectedDate: Date? = nil, hideItems: [Int]? = [], onTap: ((Date) -> Void)? = nil) {
+    init(date: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], onTap: ((DateInRegion) -> Void)? = nil) {
         self.date = date.dateAt(.startOfWeek)
         self.selectedDate = selectedDate
         self.hideItems = hideItems
@@ -22,10 +22,10 @@ struct WeekView: View {
     }
 
     fileprivate func dateViewByIndex(_ index: Int) -> DateView {
-        let date = self.date.dateByAdding(index, .day).date
+        let date = self.date.dateByAdding(index, .day)
         return DateView(
             date: date,
-            selected: selectedDate?.compare(toDate: date, granularity: .day) == .orderedSame,
+            selected: selectedDate?.day == date.day && selectedDate?.month == date.month && selectedDate?.year == date.year,
             onTap: onTap
         )
     }
@@ -46,17 +46,17 @@ struct WeekView: View {
 struct WeekView_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            WeekView(date: Date()).padding()
-            WeekView(date: Date(), hideItems: [0, 1, 6]).padding()
-            WeekView(date: Date(), selectedDate: Date()).padding()
-            WeekView(date: Date(), selectedDate: Date().dateByAdding(1, .day).date).padding()
-            WeekView(date: Date(), selectedDate: Date().dateByAdding(-1, .day).date).padding()
+            WeekView(date: Date().convertTo(region: .current)).padding()
+            WeekView(date: Date().convertTo(region: .current), hideItems: [0, 1, 6]).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().convertTo(region: .current)).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(1, .day)).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(-1, .day)).padding()
         }
         VStack{
-            WeekView(date: Date()).padding()
-            WeekView(date: Date(), selectedDate: Date()).padding()
-            WeekView(date: Date(), selectedDate: Date().dateByAdding(1, .day).date).padding()
-            WeekView(date: Date(), selectedDate: Date().dateByAdding(-1, .day).date).padding()
+            WeekView(date: Date().convertTo(region: .current)).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().convertTo(region: .current)).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(1, .day)).padding()
+            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(-1, .day)).padding()
         }.preferredColorScheme(.dark)
     }
 }

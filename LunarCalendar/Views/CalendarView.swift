@@ -10,7 +10,7 @@ import SwiftDate
 
 struct CalendarView: View {
     @State private var isShowingEvent = false
-    @State private var selectedDate: Date = Date()
+    @State private var selectedDate: DateInRegion = Date().convertTo(region: .current)
     @State private var settingModal = false
     @State private var scrollView: ScrollViewProxy? = nil
     private let midIndex = Date().year * 12 + Date().month
@@ -38,7 +38,7 @@ struct CalendarView: View {
                                         .dateByAdding(
                                             Int(floor(29.530588853 * Double(index - midIndex))),
                                             .day
-                                        ).date,
+                                        ),
                                     selectedDate: selectedDate,
                                     onTap: { date in
                                         withAnimation {
@@ -79,10 +79,9 @@ struct CalendarView: View {
         }.toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 Button("Today") {
-                    if self.scrollView != nil {
-                        withAnimation {
-                            self.scrollView?.scrollTo(midIndex, anchor: .top)
-                        }
+                    withAnimation {
+                        self.selectedDate = Date().convertTo(region: .current)
+                        self.scrollView?.scrollTo(midIndex, anchor: .top)
                     }
                 }
                 Spacer()
