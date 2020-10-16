@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6CABC3852539BC9A00AFA8C0 /* CalendarScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CABC3842539BC9A00AFA8C0 /* CalendarScrollView.swift */; };
 		6CB38198252B0CE700D4B42E /* LunarCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB38197252B0CE700D4B42E /* LunarCalendarApp.swift */; };
 		6CB3819A252B0CE700D4B42E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB38199252B0CE700D4B42E /* ContentView.swift */; };
 		6CB3819C252B0CEB00D4B42E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CB3819B252B0CEB00D4B42E /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6CABC3842539BC9A00AFA8C0 /* CalendarScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScrollView.swift; sourceTree = "<group>"; };
 		6CB38194252B0CE700D4B42E /* LunarCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunarCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB38197252B0CE700D4B42E /* LunarCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunarCalendarApp.swift; sourceTree = "<group>"; };
 		6CB38199252B0CE700D4B42E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				6CB381C0252B0EC000D4B42E /* CalendarView.swift */,
 				6CB381C1252B0EC000D4B42E /* SettingView.swift */,
+				6CABC3842539BC9A00AFA8C0 /* CalendarScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				6CB381BC252B0EA800D4B42E /* WeekView.swift in Sources */,
 				6CB381A1252B0CEB00D4B42E /* Persistence.swift in Sources */,
 				6CB381C2252B0EC000D4B42E /* CalendarView.swift in Sources */,
+				6CABC3852539BC9A00AFA8C0 /* CalendarScrollView.swift in Sources */,
 				6CB381C3252B0EC000D4B42E /* SettingView.swift in Sources */,
 				6CB381BD252B0EA800D4B42E /* DateView.swift in Sources */,
 				6CB381BB252B0EA800D4B42E /* MonthView.swift in Sources */,

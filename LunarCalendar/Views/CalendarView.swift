@@ -12,8 +12,7 @@ struct CalendarView: View {
     @State private var isShowingEvent = false
     @State private var selectedDate: DateInRegion = Date().convertTo(region: .current)
     @State private var settingModal = false
-    @State private var scrollView: ScrollViewProxy? = nil
-    private let midIndex = Date().year * 12 + Date().month
+    @State private var calendarKey: UInt8 = 0
     
     var body: some View {
         TabView {
@@ -29,37 +28,21 @@ struct CalendarView: View {
                     }
                 }.padding()
                 WeekdayLabel()
-                ScrollView(showsIndicators: false) {
-                    ScrollViewReader { scrollView in
-                        LazyVStack() {
-                            ForEach(0...(midIndex * 2), id: \.self) { index in
-                                MonthView(
-                                    date: Date()
-                                        .dateByAdding(
-                                            Int(floor(29.530588853 * Double(index - midIndex))),
-                                            .day
-                                        ),
-                                    selectedDate: selectedDate,
-                                    onTap: { date in
-                                        withAnimation {
-                                            if self.selectedDate == date {
-                                                self.isShowingEvent.toggle()
-                                            } else {
-                                                self.isShowingEvent = true
-                                            }
-                                            self.selectedDate = date
-                                        }
+                ForEach(0...1, id: \.self) { index in
+                    if index == calendarKey {
+                        CalendarScrollView(
+                            selectedDate: self.selectedDate,
+                            onTap: { date in
+                                withAnimation {
+                                    if self.selectedDate == date {
+                                        self.isShowingEvent.toggle()
+                                    } else {
+                                        self.isShowingEvent = true
                                     }
-                                )
+                                    self.selectedDate = date
+                                }
                             }
-                        }.onAppear {
-                            if self.scrollView == nil {
-                                self.scrollView = scrollView
-                            }
-                            withAnimation {
-                                scrollView.scrollTo(midIndex, anchor: .top)
-                            }
-                        }
+                        )
                     }
                 }
                 if isShowingEvent {
@@ -81,7 +64,7 @@ struct CalendarView: View {
                 Button("Today") {
                     withAnimation {
                         self.selectedDate = Date().convertTo(region: .current)
-                        self.scrollView?.scrollTo(midIndex, anchor: .top)
+                        self.calendarKey = self.calendarKey == 1 ? 0 : 1
                     }
                 }
                 Spacer()
