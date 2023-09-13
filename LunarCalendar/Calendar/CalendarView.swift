@@ -18,13 +18,24 @@ struct CalendarView: View {
     var body: some View {
         VStack {
             HStack {
-                    VStack(alignment: .leading) {
-                        Text(dateInRegion.toFormat("LLLL").capitalized)
-                        Text(dateInRegion.toFormat("UUUU").capitalized + "/" + dateInRegion.date.toFormat("YYYY")).font(.caption)
-                    }
+                VStack(alignment: .leading) {
+                    Text(dateInRegion.toFormat("LLLL").capitalized)
+                    Text(dateInRegion.toFormat("UUUU").capitalized + "/" + dateInRegion.date.toFormat("YYYY")).font(.caption)
+                }
                 Spacer()
-                Button(action: {}) {
-                    Image(systemName: "plus")
+                Button(action: {
+                    withAnimation {
+                        dateInRegion = dateInRegion.dateByAdding(-1, .month)
+                    }
+                }) {
+                    Image(systemName: "chevron.left")
+                }.padding()
+                Button(action: {
+                    withAnimation {
+                        dateInRegion = dateInRegion.dateByAdding(1, .month)
+                    }
+                }) {
+                    Image(systemName: "chevron.right")
                 }
             }.padding()
             WeekdayLabel(dateInRegion: dateInRegion)
