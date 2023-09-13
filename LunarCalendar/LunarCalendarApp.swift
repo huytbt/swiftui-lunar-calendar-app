@@ -15,7 +15,7 @@ struct LunarCalendarApp: App {
         WindowGroup {
 //            ContentView()
 //                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            CalendarView()
+            MainView()
         }
     }
 }

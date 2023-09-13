@@ -9,20 +9,20 @@ import SwiftUI
 import SwiftDate
 
 struct WeekView: View {
-    let date: DateInRegion
-    var selectedDate: DateInRegion? = nil
-    var hideItems: [Int]? = []
-    var onTap: ((DateInRegion) -> Void)? = nil
+    private var viewDate: DateInRegion
+    private var selectedDate: DateInRegion? = nil
+    private var hideItems: [Int]? = []
+    private var onTap: ((DateInRegion) -> Void)? = nil
     
-    init(date: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], onTap: ((DateInRegion) -> Void)? = nil) {
-        self.date = date.dateAt(.startOfWeek)
+    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], onTap: ((DateInRegion) -> Void)? = nil) {
+        self.viewDate = viewDate.date.dateAt(.startOfWeek).convertTo(region: viewDate.region)
         self.selectedDate = selectedDate
         self.hideItems = hideItems
         self.onTap = onTap
     }
 
-    fileprivate func dateViewByIndex(_ index: Int) -> DateView {
-        let date = self.date.dateByAdding(index, .day)
+    fileprivate func DateViewByIndex(_ index: Int) -> DateView {
+        let date = self.viewDate.dateByAdding(index, .day)
         return DateView(
             date: date,
             selected: selectedDate?.day == date.day && selectedDate?.month == date.month && selectedDate?.year == date.year,
@@ -36,27 +36,28 @@ struct WeekView: View {
                 if hideItems?.firstIndex(of: index) ?? -1 >= 0 {
                     Text("").frame(maxWidth: .infinity)
                 } else {
-                    dateViewByIndex(index)
+                    DateViewByIndex(index)
                 }
             }
-        }
+        }.padding(.horizontal, 5)
     }
 }
 
 struct WeekView_Previews: PreviewProvider {
+    static let region: Region = Region(calendar: Calendars.chinese,zone: Zones.current, locale: Locales.vietnamese)
     static var previews: some View {
         VStack{
-            WeekView(date: Date().convertTo(region: .current)).padding()
-            WeekView(date: Date().convertTo(region: .current), hideItems: [0, 1, 6]).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().convertTo(region: .current)).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(1, .day)).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(-1, .day)).padding()
+            WeekView(viewDate: Date().convertTo(region: region)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), hideItems: [0, 1, 6]).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().convertTo(region: region)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().dateByAdding(1, .day)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().dateByAdding(-1, .day)).padding()
         }
         VStack{
-            WeekView(date: Date().convertTo(region: .current)).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().convertTo(region: .current)).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(1, .day)).padding()
-            WeekView(date: Date().convertTo(region: .current), selectedDate: Date().dateByAdding(-1, .day)).padding()
+            WeekView(viewDate: Date().convertTo(region: region)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().convertTo(region: region)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().dateByAdding(1, .day)).padding()
+            WeekView(viewDate: Date().convertTo(region: region), selectedDate: Date().dateByAdding(-1, .day)).padding()
         }.preferredColorScheme(.dark)
     }
 }
