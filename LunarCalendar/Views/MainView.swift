@@ -9,17 +9,44 @@ import SwiftUI
 import SwiftDate
 
 struct MainView: View {
-    @State private var settingModal = false
+    @State var settingModal = false
+    @State var dateInRegion: DateInRegion = Date().convertTo(
+        region: Region(
+            calendar: Calendars.chinese,
+            zone: Zones.current, locale: Locales.current
+        )
+    )
     
     var body: some View {
         VStack {
             CalendarView(
-                date: Date(),
-                region: Region(calendar: Calendars.chinese, zone: Zones.current, locale: Locales.current)
+                dateInRegion: dateInRegion,
+                dateAction: { date in
+                    dateInRegion = date
+                },
+                prevAction: {
+                    withAnimation {
+                        dateInRegion = dateInRegion.dateByAdding(-1, .month)
+                    }
+                },
+                nextAction: {
+                    withAnimation {
+                        dateInRegion = dateInRegion.dateByAdding(1, .month)
+                    }
+                }
             )
         }.toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
-                Button("Today") {}
+                Button("Today") {
+                    withAnimation {
+                        dateInRegion = Date().convertTo(
+                            region: Region(
+                                calendar: Calendars.chinese,
+                                zone: Zones.current, locale: Locales.current
+                            )
+                        )
+                    }
+                }
                 Spacer()
                 Button("Events") {}
                 Spacer()

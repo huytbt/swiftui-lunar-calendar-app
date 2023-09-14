@@ -11,16 +11,16 @@ import SwiftDate
 struct MonthView: View {
     private var viewDate: DateInRegion
     private var selectedDate: DateInRegion?
-    private var onTap: ((DateInRegion) -> Void)? = nil
+    private var dateAction: ((DateInRegion) -> Void)? = nil
     private var weeks: Int = 5
     private var hideBeforeItems: [Int] = []
     private var hideAfterItems: [Int] = []
     private var startDate: DateInRegion
     
-    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, onTap: ((DateInRegion) -> Void)? = nil) {
+    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, dateAction: ((DateInRegion) -> Void)? = nil) {
         self.viewDate = viewDate
         self.selectedDate = selectedDate
-        self.onTap = onTap
+        self.dateAction = dateAction
         
         self.startDate = viewDate.dateAtStartOf(.month).dateAtStartOf(.weekday).dateByAdding(1, .day)
 
@@ -54,20 +54,20 @@ struct MonthView: View {
                         viewDate: startDate.dateByAdding(index * 7, .day),
                         selectedDate: selectedDate,
                         hideItems: hideBeforeItems,
-                        onTap: onTap
+                        dateAction: dateAction
                     ).padding(.vertical)
                 } else if index < weeks - 1 {
                     WeekView(
                         viewDate: startDate.dateByAdding(index * 7, .day),
                         selectedDate: selectedDate,
-                        onTap: onTap
+                        dateAction: dateAction
                     ).padding(.vertical)
                 } else {
                     WeekView(
                         viewDate: startDate.dateByAdding(index * 7, .day),
                         selectedDate: selectedDate,
                         hideItems: hideAfterItems,
-                        onTap: onTap
+                        dateAction: dateAction
                     ).padding(.vertical)
                 }
             }

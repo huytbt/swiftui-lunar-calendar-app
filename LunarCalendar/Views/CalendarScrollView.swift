@@ -32,7 +32,7 @@ struct CalendarScrollView: View {
                                     .day
                                 ),
                             selectedDate: selectedDate,
-                            onTap: onTap
+                            dateAction: onTap
                         )
                     }
                 }.onAppear {

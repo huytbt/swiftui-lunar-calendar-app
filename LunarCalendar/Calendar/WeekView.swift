@@ -12,13 +12,13 @@ struct WeekView: View {
     private var viewDate: DateInRegion
     private var selectedDate: DateInRegion? = nil
     private var hideItems: [Int]? = []
-    private var onTap: ((DateInRegion) -> Void)? = nil
+    private var dateAction: ((DateInRegion) -> Void)? = nil
     
-    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], onTap: ((DateInRegion) -> Void)? = nil) {
+    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], dateAction: ((DateInRegion) -> Void)? = nil) {
         self.viewDate = viewDate.date.dateAt(.startOfWeek).convertTo(region: viewDate.region)
         self.selectedDate = selectedDate
         self.hideItems = hideItems
-        self.onTap = onTap
+        self.dateAction = dateAction
     }
 
     fileprivate func DateViewByIndex(_ index: Int) -> DateView {
@@ -26,7 +26,7 @@ struct WeekView: View {
         return DateView(
             date: date,
             selected: selectedDate?.day == date.day && selectedDate?.month == date.month && selectedDate?.year == date.year,
-            onTap: onTap
+            action: dateAction
         )
     }
     

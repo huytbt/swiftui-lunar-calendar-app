@@ -9,11 +9,10 @@ import SwiftUI
 import SwiftDate
 
 struct CalendarView: View {
-    @State private var dateInRegion: DateInRegion
-    
-    init(date: Date, region: Region) {
-        _dateInRegion = State(initialValue: date.convertTo(region: region))
-    }
+    var dateInRegion: DateInRegion
+    var dateAction: ((DateInRegion) -> Void)? = nil
+    var prevAction: (() -> Void)? = nil
+    var nextAction: (() -> Void)? = nil
     
     var body: some View {
         VStack {
@@ -24,16 +23,12 @@ struct CalendarView: View {
                 }
                 Spacer()
                 Button(action: {
-                    withAnimation {
-                        dateInRegion = dateInRegion.dateByAdding(-1, .month)
-                    }
+                    prevAction?()
                 }) {
                     Image(systemName: "chevron.left")
                 }.padding()
                 Button(action: {
-                    withAnimation {
-                        dateInRegion = dateInRegion.dateByAdding(1, .month)
-                    }
+                    nextAction?()
                 }) {
                     Image(systemName: "chevron.right")
                 }
@@ -43,25 +38,16 @@ struct CalendarView: View {
                 MonthView(
                     viewDate: dateInRegion,
                     selectedDate: dateInRegion,
-                    onTap: { date in
-                        dateInRegion = date
-                    }
-                ).gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                    .onEnded { value in
-                        if value.translation.width < 0 {
-                            withAnimation {
-                                dateInRegion = dateInRegion.dateByAdding(1, .month)
-                            }
-                        }
-                        if value.translation.width > 0 {
-                            withAnimation {
-                                dateInRegion = dateInRegion.dateByAdding(-1, .month)
-                            }
-                        }
-                    }
+                    dateAction: dateAction
                 )
             }
         }
+    }
+    
+    func goToday() {
+        print(dateInRegion)
+//        dateInRegion = Date().convertTo(region: dateInRegion.region)
+//        print(dateInRegion)
     }
 }
 
@@ -78,12 +64,12 @@ struct WeekdayLabel: View {
     }
 }
 
-struct CalendarView_Previews: PreviewProvider {
-    static let region: Region = Region(calendar: Calendars.chinese,zone: Zones.current, locale: Locales.vietnamese)
-    static var previews: some View {
-        Group {
-            CalendarView(date: Date(), region: region)
-                .preferredColorScheme(.dark)
-        }
-    }
-}
+//struct CalendarView_Previews: PreviewProvider {
+//    static let region: Region = Region(calendar: Calendars.chinese,zone: Zones.current, locale: Locales.vietnamese)
+//    static var previews: some View {
+//        Group {
+//            CalendarView(dateInRegion: Date().convertTo(region: region))
+//                .preferredColorScheme(.dark)
+//        }
+//    }
+//}
