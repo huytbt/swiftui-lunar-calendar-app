@@ -11,8 +11,7 @@ import SwiftDate
 struct CalendarView: View {
     var dateInRegion: DateInRegion
     var dateAction: ((DateInRegion) -> Void)? = nil
-    var prevAction: (() -> Void)? = nil
-    var nextAction: (() -> Void)? = nil
+    var plusAction: (() -> Void)? = nil
     
     var body: some View {
         VStack {
@@ -23,14 +22,9 @@ struct CalendarView: View {
                 }
                 Spacer()
                 Button(action: {
-                    prevAction?()
+                    plusAction?()
                 }) {
-                    Image(systemName: "chevron.left")
-                }.padding()
-                Button(action: {
-                    nextAction?()
-                }) {
-                    Image(systemName: "chevron.right")
+                    Image(systemName: "plus")
                 }
             }.padding()
             WeekdayLabel(dateInRegion: dateInRegion)
@@ -43,33 +37,27 @@ struct CalendarView: View {
             }
         }
     }
-    
-    func goToday() {
-        print(dateInRegion)
-//        dateInRegion = Date().convertTo(region: dateInRegion.region)
-//        print(dateInRegion)
-    }
 }
 
 struct WeekdayLabel: View {
     var dateInRegion: DateInRegion
     var body: some View {
-        HStack{
+        HStack {
             ForEach(0 ..< 7) { index in
                 Text(Date().dateAt(.startOfWeek).dateByAdding(index, .day).convertTo(region: dateInRegion.region).weekdayName(.short).capitalized)
                     .font(.caption)
                     .frame(maxWidth: .infinity)
             }
-        }.padding(.horizontal, 5)
+        }
     }
 }
 
-//struct CalendarView_Previews: PreviewProvider {
-//    static let region: Region = Region(calendar: Calendars.chinese,zone: Zones.current, locale: Locales.vietnamese)
-//    static var previews: some View {
-//        Group {
-//            CalendarView(dateInRegion: Date().convertTo(region: region))
-//                .preferredColorScheme(.dark)
-//        }
-//    }
-//}
+struct CalendarView_Previews: PreviewProvider {
+    static let region: Region = Region(calendar: Calendars.chinese,zone: Zones.current, locale: Locales.vietnamese)
+    static var previews: some View {
+        Group {
+            CalendarView(dateInRegion: Date().convertTo(region: region))
+                .preferredColorScheme(.dark)
+        }
+    }
+}

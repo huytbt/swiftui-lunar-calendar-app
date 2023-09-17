@@ -9,67 +9,39 @@ import SwiftUI
 import SwiftDate
 
 struct MonthView: View {
-    private var viewDate: DateInRegion
-    private var selectedDate: DateInRegion?
-    private var dateAction: ((DateInRegion) -> Void)? = nil
+    var viewDate: DateInRegion
+    var selectedDate: DateInRegion?
+    var dateAction: ((DateInRegion) -> Void)? = nil
+
     private var weeks: Int = 5
-    private var hideBeforeItems: [Int] = []
-    private var hideAfterItems: [Int] = []
     private var startDate: DateInRegion
+    private var lastDateOfMonth: DateInRegion
     
     init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, dateAction: ((DateInRegion) -> Void)? = nil) {
         self.viewDate = viewDate
         self.selectedDate = selectedDate
         self.dateAction = dateAction
         
-        self.startDate = viewDate.dateAtStartOf(.month).dateAtStartOf(.weekday).dateByAdding(1, .day)
-
-        let startDayOfMonth = viewDate.dateAtStartOf(.month).dateByAdding(1, .day).date
-        let startDayOfWeekOfMonth = startDayOfMonth.dateAtStartOf(.weekOfMonth)
-        if (startDayOfMonth - startDayOfWeekOfMonth).day! > 0 {
-            for index in 0...((startDayOfMonth - startDayOfWeekOfMonth).day! - 1) {
-                self.hideBeforeItems.append(index)
-            }
-        }
-        let endDayOfMonth = viewDate.dateAtEndOf(.month).date
-        let firstDayOfLastWeekOfMonth = endDayOfMonth.dateAtStartOf(.weekOfMonth)
-        let duration = firstDayOfLastWeekOfMonth - startDayOfWeekOfMonth
-        if duration.weekOfYear! != 4 && duration.day! > 0 {
-            weeks = 6
-        }
-        let endDayOfWeekOfMonth = endDayOfMonth.dateAtEndOf(.weekOfMonth)
-        if (endDayOfWeekOfMonth - endDayOfMonth).day! > 0 {
-            for index in 0...((endDayOfWeekOfMonth - endDayOfMonth).day!) {
-                self.hideAfterItems.append(7 - index)
-            }
-        }
+        startDate = viewDate.dateAtStartOf([.month, .weekOfYear])
+            .dateByAdding(viewDate.hour, .hour).dateByAdding(viewDate.minute, .minute).dateByAdding(viewDate.second, .second)
+        lastDateOfMonth = viewDate.dateAtEndOf(.month)
+        
+        let components = lastDateOfMonth.dateAtEndOf(.weekOfYear).componentsSince(
+            startDate, components: [.weekOfYear]
+        )
+        weeks = components.weekOfYear! + 1
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(0 ..< weeks, id: \.self) { index in
                 Divider()
-                if index == 0 {
-                    WeekView(
-                        viewDate: startDate.dateByAdding(index * 7, .day),
-                        selectedDate: selectedDate,
-                        hideItems: hideBeforeItems,
-                        dateAction: dateAction
-                    ).padding(.vertical)
-                } else if index < weeks - 1 {
-                    WeekView(
-                        viewDate: startDate.dateByAdding(index * 7, .day),
-                        selectedDate: selectedDate,
-                        dateAction: dateAction
-                    ).padding(.vertical)
-                } else {
-                    WeekView(
-                        viewDate: startDate.dateByAdding(index * 7, .day),
-                        selectedDate: selectedDate,
-                        hideItems: hideAfterItems,
-                        dateAction: dateAction
-                    ).padding(.vertical)
-                }
+                WeekView(
+                    viewDate: startDate.dateByAdding(index, .weekOfYear),
+                    selectedDate: selectedDate,
+                    isOnlyShowDateOfMonth: true,
+                    dateAction: dateAction
+                ).padding(.vertical)
             }
         }
     }

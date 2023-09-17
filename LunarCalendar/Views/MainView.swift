@@ -13,47 +13,63 @@ struct MainView: View {
     @State var dateInRegion: DateInRegion = Date().convertTo(
         region: Region(
             calendar: Calendars.chinese,
-            zone: Zones.current, locale: Locales.current
+            zone: Zones.current,
+            locale: Locales.current
         )
     )
     
     var body: some View {
-        VStack {
-            CalendarView(
-                dateInRegion: dateInRegion,
-                dateAction: { date in
-                    dateInRegion = date
-                },
-                prevAction: {
-                    withAnimation {
-                        dateInRegion = dateInRegion.dateByAdding(-1, .month)
+        ScrollViewReader { proxy in
+            VStack {
+                CalendarView(
+                    dateInRegion: dateInRegion,
+                    dateAction: { date in
+                        dateInRegion = date
                     }
-                },
-                nextAction: {
+                ).onAppear {
                     withAnimation {
-                        dateInRegion = dateInRegion.dateByAdding(1, .month)
+                        proxy.scrollTo("selectedDate", anchor: .trailing)
                     }
                 }
-            )
-        }.toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Button("Today") {
-                    withAnimation {
-                        dateInRegion = Date().convertTo(
-                            region: Region(
-                                calendar: Calendars.chinese,
-                                zone: Zones.current, locale: Locales.current
+            }.toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button("Today") {
+                        withAnimation {
+                            dateInRegion = Date().convertTo(
+                                region: Region(
+                                    calendar: Calendars.chinese,
+                                    zone: Zones.current,
+                                    locale: Locales.current
+                                )
                             )
-                        )
+                            proxy.scrollTo("selectedDate", anchor: .trailing)
+                        }
                     }
-                }
-                Spacer()
-                Button("Events") {}
-                Spacer()
-                Button("Settings") {
-                    self.settingModal.toggle()
-                }.sheet(isPresented: $settingModal) {
-                    SettingView(showModal: self.$settingModal)
+                    Spacer()
+                    HStack {
+                        Button(action: {
+                            withAnimation {
+                                dateInRegion = dateInRegion.dateByAdding(-1, .month)
+                                proxy.scrollTo("selectedDate", anchor: .trailing)
+                            }
+                        }) {
+                            Image(systemName: "chevron.left")
+                        }
+                        Button(action: {
+                            withAnimation {
+                                dateInRegion = dateInRegion.dateByAdding(1, .month)
+                                proxy.scrollTo("selectedDate", anchor: .trailing)
+                            }
+                        }) {
+                            Image(systemName: "chevron.right")
+                        }
+                    }
+                    Spacer()
+                    Button("Settings") {
+                        self.settingModal.toggle()
+                    }.sheet(isPresented: $settingModal) {
+                        SettingView(showModal: self.$settingModal)
+                    }
                 }
             }
         }

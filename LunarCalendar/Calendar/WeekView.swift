@@ -9,37 +9,54 @@ import SwiftUI
 import SwiftDate
 
 struct WeekView: View {
-    private var viewDate: DateInRegion
-    private var selectedDate: DateInRegion? = nil
-    private var hideItems: [Int]? = []
-    private var dateAction: ((DateInRegion) -> Void)? = nil
-    
-    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, hideItems: [Int]? = [], dateAction: ((DateInRegion) -> Void)? = nil) {
-        self.viewDate = viewDate.date.dateAt(.startOfWeek).convertTo(region: viewDate.region)
-        self.selectedDate = selectedDate
-        self.hideItems = hideItems
-        self.dateAction = dateAction
-    }
-
-    fileprivate func DateViewByIndex(_ index: Int) -> DateView {
-        let date = self.viewDate.dateByAdding(index, .day)
-        return DateView(
-            date: date,
-            selected: selectedDate?.day == date.day && selectedDate?.month == date.month && selectedDate?.year == date.year,
-            action: dateAction
-        )
-    }
+    var viewDate: DateInRegion
+    var selectedDate: DateInRegion? = nil
+    var isOnlyShowDateOfMonth: Bool? = false
+    var hideItems: [Int]? = []
+    var dateAction: ((DateInRegion) -> Void)? = nil
     
     var body: some View {
         HStack {
             ForEach(0 ..< 7) { index in
-                if hideItems?.firstIndex(of: index) ?? -1 >= 0 {
-                    Text("").frame(maxWidth: .infinity)
-                } else {
-                    DateViewByIndex(index)
-                }
+                DateViewOrBlank(
+                    viewDate: viewDate.dateByAdding(index, .day),
+                    selectedDate: selectedDate,
+                    isOnlyShowDateOfMonth: isOnlyShowDateOfMonth,
+                    dateAction: dateAction
+                )
             }
         }.padding(.horizontal, 5)
+    }
+}
+
+struct DateViewOrBlank: View {
+    var viewDate: DateInRegion
+    var dateAction: ((DateInRegion) -> Void)? = nil
+    
+    private var isBlank: Bool? = false
+    private var isSelect: Bool = false
+    
+    init(viewDate: DateInRegion, selectedDate: DateInRegion? = nil, isOnlyShowDateOfMonth: Bool? = nil, dateAction: ((DateInRegion) -> Void)? = nil) {
+        self.viewDate = viewDate
+        self.dateAction = dateAction
+        
+        self.isSelect = selectedDate?.toFormat("YYYY-LL-dd") == viewDate.toFormat("YYYY-LL-dd")
+        
+        if isOnlyShowDateOfMonth ?? false && selectedDate != nil {
+            isBlank = selectedDate!.toFormat("LL") != viewDate.toFormat("LL")
+        }
+    }
+    
+    var body: some View {
+        if isBlank! {
+            Text("").frame(maxWidth: .infinity)
+        } else {
+            DateView(
+                date: viewDate,
+                selected: isSelect,
+                action: dateAction
+            )
+        }
     }
 }
 

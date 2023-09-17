@@ -9,10 +9,10 @@ import SwiftUI
 import SwiftDate
 
 struct DateView: View {
-    private let date: DateInRegion
-    private var selected: Bool? = false
-    private var hasEvents: Bool? = false
-    private var action: ((DateInRegion) -> Void)? = nil
+    var date: DateInRegion
+    var selected: Bool? = false
+    var hasEvents: Bool? = false
+    var action: ((DateInRegion) -> Void)? = nil
     
     init(date: DateInRegion, selected: Bool? = false, hasEvents: Bool? = false, action: ( (DateInRegion) -> Void)? = nil) {
         self.date = date
@@ -35,14 +35,14 @@ struct DateView: View {
                             Circle()
                                 .foregroundColor(Color(UIColor.systemRed))
                                 .frame(minWidth: 45, minHeight: 45)
-                        )
+                        ).id("selectedDate")
                 } else {
                     DateText(date: date, color: Color(UIColor.systemBackground), action: action)
                         .background(
                             Circle()
                                 .foregroundColor(Color(UIColor.label))
                                 .frame(minWidth: 45, minHeight: 45)
-                        )
+                        ).id("selectedDate")
                 }
             } else {
                 if isToday(date: date) {
