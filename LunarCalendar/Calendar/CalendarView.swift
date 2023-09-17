@@ -24,7 +24,7 @@ struct CalendarView: View {
                 Button(action: {
                     plusAction?()
                 }) {
-                    Image(systemName: "plus")
+                    Image(systemName: "plus").frame(width: 44, height: 44, alignment: .trailing)
                 }
             }.padding()
             WeekdayLabel(dateInRegion: dateInRegion)

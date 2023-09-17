@@ -33,7 +33,7 @@ struct MainView: View {
                 }
             }.toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
-                    Button("Today") {
+                    Button(action: {
                         withAnimation {
                             dateInRegion = Date().convertTo(
                                 region: Region(
@@ -44,6 +44,8 @@ struct MainView: View {
                             )
                             proxy.scrollTo("selectedDate", anchor: .trailing)
                         }
+                    }) {
+                        Text("Today").frame(width: 100, height: 44, alignment: .leading)
                     }
                     Spacer()
                     HStack {
@@ -53,7 +55,7 @@ struct MainView: View {
                                 proxy.scrollTo("selectedDate", anchor: .trailing)
                             }
                         }) {
-                            Image(systemName: "chevron.left")
+                            Image(systemName: "chevron.left").frame(width: 44, height: 44, alignment: .trailing)
                         }
                         Button(action: {
                             withAnimation {
@@ -61,12 +63,14 @@ struct MainView: View {
                                 proxy.scrollTo("selectedDate", anchor: .trailing)
                             }
                         }) {
-                            Image(systemName: "chevron.right")
+                            Image(systemName: "chevron.right").frame(width: 44, height: 44, alignment: .leading)
                         }
                     }
                     Spacer()
-                    Button("Settings") {
+                    Button(action: {
                         self.settingModal.toggle()
+                    }) {
+                        Text("Settings").frame(width: 100, height: 44, alignment: .trailing)
                     }.sheet(isPresented: $settingModal) {
                         SettingView(showModal: self.$settingModal)
                     }
